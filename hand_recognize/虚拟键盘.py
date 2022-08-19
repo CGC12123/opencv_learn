@@ -3,14 +3,14 @@ from hand_recognize_class import HandDetector
 import numpy as np
 import cvzone
 import time
-
+from pynput.keyboard import Controller
 
 cap = cv2.VideoCapture(0)
 cap.set(3, 1280)
 cap.set(4,720)
 
 detector = HandDetector(detectionCon = 0.8)
-
+keyboard = Controller()
 
 class Button():
     def __init__(self, pos, text, size = [100,100]):
@@ -76,6 +76,7 @@ while True:
                 # print(l)
                 # 当检测到为点击时
                 if l < 30:
+                    keyboard.press(button.text)
                     cv2.rectangle(img, button.pos, (x + w, y + h), (25, 200, 25), cv2.FILLED)
                     cv2.putText(img, button.text, (x + 23, y + 75), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
                     finalText += button.text
